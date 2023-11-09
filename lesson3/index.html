@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>HW 3</title>
+</head>
+<body>
+<h1>User info page</h1>
+
+<script>
+    const capitals = {
+        'киев': 'Украины',
+        'вашингтон': 'США',
+        'москва': 'России',
+        'варшава': 'Польши',
+        'минск': 'Беларуси',
+        'кишинев': 'Молдавии',
+        'бухарест': 'Румынии'
+    }
+
+    const sports = {
+        'велоспорт': 'чемпионом по велоспорту', // Тут может быть имя и фамилия чемпионов
+        'футбол': 'чемпионом по футболу',
+        'волейбол': 'чемпионом по волейболу',
+        'бег': 'чемпионом по бегу',
+        'прыжки': 'чемпионом по прыжкам',
+    }
+
+    function request(prop, is_int = false) {
+        let response = prompt(`Введи ${prop}:`);
+
+        if (!response) {
+            alert(`Жаль, что вы не указали ${prop}`);
+
+            return request(prop, is_int);
+        }
+
+        if (is_int) {
+            response = parseInt(response);
+
+            if (isNaN(response)) {
+                alert('Введи число!');
+
+                return request(prop, is_int);
+            }
+        }
+
+        return response;
+    }
+
+    function getValue(obj, key, def = '') {
+        key = key.toLowerCase();
+
+        if (obj[key]) {
+            return obj[key];
+        }
+
+        return def;
+    }
+
+    const name = request('имя');
+    const birthday = request('год рождения', true);
+    const city = request('город');
+    const sport = request('любимый вид спорта');
+
+    const country = getValue(capitals, city);
+
+    const age = new Date().getFullYear() - birthday;
+    const capital = country ? `столице ${country}` : `городе ${city}`;
+    const champion = getValue(sports, sport, `лучшим в ${sport}`);
+
+    const res = `Привет, ${name}! Тебе ${age} лет. Ты живешь в ${capital}! Хочешь стать ${champion}?`
+
+    alert(res);
+
+</script>
+</body>
+</html>
