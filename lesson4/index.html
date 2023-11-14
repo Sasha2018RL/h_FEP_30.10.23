@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>HW 4</title>
+</head>
+<body>
+<h1>Loops</h1>
+
+<div>
+    <p>Числа от 10 до 20: <span id="t1"></span></p>
+    <p>Квадраты чисел от 10 до 20: <span id="t2"></span></p>
+    <p>
+        Таблица умножения на 7: <br>
+    <pre id="t3"></pre>
+    </p>
+    <p>Сумма всех целых чисел от 1 до 15 включая 15: <span id="t4"></span></p>
+    <p>Произведение всех целых чисел от 15 до 35 включая 35: <span id="t5"></span></p>
+    <p>Среднее арифметическое всех целых чисел от 1 до 500 не включая 500: <span id="t6"></span></p>
+    <p>Сумма четных чисел от 30 до 80: <span id="t7"></span></p>
+    <p>Числа в диапазоне 100-200 кратные 3: <span id="t8"></span></p>
+    <p>Делители числа <b class="rand_int"></b>: <span id="t9"></span></p>
+    <p>Четные делители числа <b class="rand_int"></b>: <span id="t10"></span></p>
+    <p>Количество четных делителей числа <b class="rand_int"></b>: <span id="t11"></span></p>
+    <p>Сумма четных делителей числа <b class="rand_int"></b>: <span id="t12"></span></p>
+    <p>
+        Таблица умножения от 1 до 10: <br>
+    <pre id="t13"></pre>
+    </p>
+</div>
+
+<script>
+    const t1 = document.getElementById('t1');
+    for (let i = 10; i <= 20; i++) {
+        t1.innerHTML += i;
+
+        if (i < 20) {
+            t1.innerHTML += ', ';
+        }
+    }
+
+
+    const t2 = document.getElementById('t2');
+    for (let i = 10; i <= 20; i++) {
+        t2.innerHTML += Math.pow(i, 2);
+
+        if (i < 20) {
+            t2.innerHTML += ', ';
+        }
+    }
+
+    function prettyNumbers(n, digits = 2, placeholder = ' ') {
+        let str = String(n);
+
+        while (str.length < digits) {
+            str = `${placeholder}${str}`;
+        }
+
+        return str;
+    }
+
+    const t3 = document.getElementById('t3');
+    for (let i = 1; i <= 10; i++) {
+        t3.innerHTML += `7 * ${prettyNumbers(i)} = ${prettyNumbers(i * 7)}`
+
+        if (i < 20) {
+            t3.innerHTML += '\n';
+        }
+    }
+
+    const t4 = document.getElementById('t4');
+    let t4_sum = 0;
+
+    for (let i = 1; i <= 15; i++) {
+        t4_sum += i;
+    }
+
+    t4.innerHTML = t4_sum;
+
+    const t5 = document.getElementById('t5');
+    let t5_mult = 0;
+
+    for (let i = 15; i <= 35; i++) {
+        t5_mult += i;
+    }
+
+    t5.innerHTML = t5_mult;
+
+
+    const t6 = document.getElementById('t6'), t6_start = 1, t6_end = 500;
+    let t6_sum = 0;
+
+    for (let i = t6_start; i < t6_end; i++) {
+        t6_sum += i;
+    }
+
+    t6.innerHTML = (t6_sum / (t6_end - t6_start)).toFixed(2);
+
+    const t7 = document.getElementById('t7');
+    let t7_sum = 0;
+
+    for (let i = 30; i < 80; i += 2) { // Правильней делать эту проверку в if внутри цикла (написал и ее, хотя в данном случае она бесполезная), но раз задание про циклы - надо где-то использовать и такой вид итератора
+        if (i % 2 === 0) {
+            t7_sum += i;
+        }
+    }
+
+    t7.innerHTML = t7_sum;
+
+    const t8 = document.getElementById('t8');
+
+    for (let i = 100; i < 200; i++) {
+        if (i % 3 === 0) {
+            if (t8.innerHTML !== '') { // Так как мы не знаем ни начального числа ни конечного - добавляем запятую только когда есть первое число. Или можно собрать их в массив и вывести через join, это более правильный вариант
+                t8.innerHTML += ', ';
+            }
+
+            t8.innerHTML += i;
+        }
+    }
+
+    const rand_int = Math.floor(Math.random() * 100) + 1;
+
+    const rand_int_usages = document.getElementsByClassName('rand_int');
+    for (const usage of rand_int_usages) {
+        usage.innerHTML = rand_int;
+    }
+
+    const rand_int_dividers = [];
+    for (let i = 1; i <= rand_int; i++) {
+        if (rand_int % i === 0) {
+            rand_int_dividers.push(i);
+        }
+    }
+    const rand_int_even_dividers = rand_int_dividers.filter(divider => divider % 2 === 0);
+
+    document.getElementById('t9').innerHTML = rand_int_dividers.join(', ');
+    document.getElementById('t10').innerHTML = rand_int_even_dividers.join(', ');
+    document.getElementById('t11').innerHTML = rand_int_even_dividers.length;
+    document.getElementById('t12').innerHTML = rand_int_even_dividers.reduce((acc, divider) => acc += divider, 0);
+
+    const t13 = document.getElementById('t13');
+    // Print first line
+    t13.innerHTML = ' X ';
+    for (let i = 1; i <= 10; i++){
+        t13.innerHTML += prettyNumbers(i, 3) + ' ';
+    }
+    t13.innerHTML += '\n'
+
+    for(let i = 1; i <= 10; i++){
+        t13.innerHTML += '\n';
+        t13.innerHTML += prettyNumbers(i, 2) + ' ';
+        for(let o = 1; o <=10; o++){
+            t13.innerHTML += `${prettyNumbers(i * o, 3)} `;
+        }
+    }
+
+</script>
+</body>
+</html>
