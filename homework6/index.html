@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HW 6</title>
+</head>
+<body>
+<h1>Arrays and functions</h1>
+
+<div>
+    <h3>Среднее арифметическое числовых элементов массива</h3>
+    <label for="elements">Введите элементы массива через запятую</label> <br>
+    <input type="text" oninput="calc_avg(this)" id="elements" size="100" placeholder="Введите элементы массива через запятую">
+
+    <ul>
+        <li>Массив: <span id="array_initial">Введите элементы массива</span></li>
+        <li>Только числовые элементы: <span id="array_numbers">Введите элементы массива</span></li>
+        <li>Среднее арифметическое числовых элементов массива: <span id="array_avg">Введите элементы массива</span></li>
+    </ul>
+</div>
+
+<div>
+    <h3>Математические действия</h3>
+    <label for="math-expr">Введите выражение в формате a + b, где a, b - числа, между ними один из знаков +, -, *, /, %, ^</label> <br>
+    <span id="math_error"></span><br>
+    <input type="text" oninput="doMath(this)" size="20" id="math-expr" placeholder="Введите выражение">
+
+    <input type="text" id="math_result" size="9" readonly placeholder="Результат">
+</div>
+
+<div>
+    <h3>Двумерные массивы</h3>
+    <label for="arr2d">Введите данные массива через запятую. Каждая строка - элементы вложенного массива, перенос строки - следующий элемент первого массива</label> <br>
+
+    <textarea oninput="fill2dArray(this)" cols="20" rows="5" id="arr2d" placeholder="1,2,3,4,5
+5,6,7,8,9,0
+a,b,c,d,e,f"></textarea>
+
+    <p>Созданный 2D массив:</p>
+    <pre id="array_2d_result"></pre>
+
+</div>
+
+<div>
+    <h3>Удаление символов из строки</h3>
+    <label for="str">Введите строку и список символов, которые из нее нужно удалить</label> <br>
+
+    <input type="text" oninput="cutString()" size="30" id="str" placeholder="Строка">
+    <input type="text" oninput="cutString()" size="8" id="symbols" placeholder="Символы">
+
+    <input type="text" id="str_result" size="30" readonly placeholder="Результат">
+</div>
+<script>
+    const array_initial = document.getElementById('array_initial');
+    const array_numbers = document.getElementById('array_numbers');
+    const array_avg = document.getElementById('array_avg');
+
+    function calc_avg(form_field) {
+        const array = form_field.value.split(',');
+
+        array_initial.innerHTML = `[${array.join(' ')}]`;
+
+        const only_numbers = array.reduce((acc, el) => {
+            if (isNumber(el)){ // Так дополнительно проверяем, что не пробел или пустой элемент массива
+                acc.push(Number(el));
+            }
+
+            return acc;
+        }, []);
+
+        array_numbers.innerHTML = only_numbers.join(', ');
+
+        if (only_numbers.length){
+            // Можно было сделать одним reduce - проверку является ли элемент числом и одновременно считать сумму, но так наглядней
+            array_avg.innerHTML = (only_numbers.reduce((sum, el) => sum += el, 0) / only_numbers.length).toFixed(2);
+        }else{
+            array_avg.innerHTML = 'Нет числовых элементов!'
+        }
+    }
+
+    const math_result = document.getElementById('math_result');
+    const math_error = document.getElementById('math_error');
+
+    function doMath(form_field) {
+        const input = form_field.value.split(' ');
+
+        if (input.length !== 3){
+            math_error.innerHTML = 'Введите выражение в формате a + b';
+            return;
+        }
+
+        let [a, action, b] = input;
+
+        if (!isNumber(a) || !isNumber(b)){
+            math_error.innerHTML = 'Введите выражение в формате a + b, a и b - числа';
+            return;
+        }
+
+        a = Number(a);
+        b = Number(b);
+
+        const allowed_actions = ['+', '-', '*', '/', '%', '^'];
+        if (!allowed_actions.includes(action)){
+            math_error.innerHTML = `Список разрешенных математических действий: ${allowed_actions.join(', ')}`
+            return;
+        }
+
+        let res = 0;
+        switch (action){
+            case '+':
+            case '-':
+            case '*':
+            case '/':
+            case '%':
+                res = eval(`${a} ${action} ${b}`); // Входящие данные провалидированы, использовать eval безопасно
+                break;
+            case '^':
+                res = Math.pow(a, b);
+                break;
+            default:
+                res = 'Error!';
+        }
+        math_error.innerHTML = '';
+        math_result.value = res;
+
+    }
+
+    const array_2d_result = document.getElementById('array_2d_result');
+    function fill2dArray(form_field){
+        const str_array = form_field.value.split('\n');
+
+        const arr_2d = str_array.map(row => row.split(','));
+
+        console.log('2D Array: ', arr_2d);
+
+        array_2d_result.innerHTML = arr_2d.map(row => row.join(', ')).join('\n')
+    }
+
+    const str_el = document.getElementById('str');
+    const symbols_el = document.getElementById('symbols');
+    const str_result_el = document.getElementById('str_result');
+
+    function cutString(){
+        let res_string = str_el.value;
+        const symbols = symbols_el.value.split('');
+        console.log(symbols)
+
+        for(const symbol of symbols){
+            res_string = res_string.replaceAll(symbol, '');
+        }
+
+        str_result_el.value = res_string;
+    }
+
+    // Проверка, является ли переданный элемент числом. Используется в нескольких местах, поэтому вынесено в функцию
+    function isNumber(value){
+        return !isNaN(parseFloat(value));
+    }
+
+</script>
+</body>
+</html>
