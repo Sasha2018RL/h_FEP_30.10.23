@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Homework 7</title>
+</head>
+<body>
+<h1>Closures</h1>
+
+<div>
+  <h3>Все введенные числа в строку будут суммированы</h3>
+  <input type="text" size="10" id="num" placeholder="Число">
+  <button onclick="sum_handler()">+</button>
+
+  <input type="text" id="sum" size="15" readonly placeholder="Сумма">
+</div>
+
+
+<script>
+  function createAdder(){
+    let sum = 0;
+
+    return function add(number){
+      sum += number;
+      return sum;
+    }
+  }
+
+  const add = createAdder();
+
+  const num_el = document.getElementById('num');
+  const sum_el = document.getElementById('sum');
+
+  function sum_handler(){
+    const val = num_el.value;
+
+    if(!isNumber(val)){
+      val.value = '';
+
+      return;
+    }
+
+    sum_el.value = add(Number(val));
+  }
+
+  function isNumber(value){
+    return !isNaN(parseFloat(value));
+  }
+</script>
+</body>
+</html>
