@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Homework 8</title>
+</head>
+<body>
+<h1><i>this</i> in functions</h1>
+
+<h2>Open console please</h2>
+
+<script>
+  const ladder = {
+    step: 0,
+    up: function (steps = 1) {
+      console.log('UP', steps)
+      this.step += steps;
+
+      return this;
+    },
+    down: function (steps = 1) {
+      console.log('DOWN', steps)
+      this.step -= steps;
+
+      return this;
+    },
+    showStep: function () { // показывает текущую ступеньку
+      console.log(this.step);
+
+      return this;
+    }
+  };
+
+  ladder
+          .up()
+          .showStep()
+          .down()
+          .showStep()
+          .up(5)
+          .showStep()
+          .down(2)
+          .showStep();
+</script>
+</body>
+</html>
