@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HW 9</title>
+</head>
+<body>
+
+<h1>OOP</h1>
+<h3>Open console!</h3>
+
+<script src="js/human.js"></script>
+<script src="js/flat.js"></script>
+<script src="js/house.js"></script>
+
+<script>
+    const humanSasha = new Human('Sasha', 'male');
+    const humanNastya = new Human('Nastya', 'female');
+    const humanKate = new Human('Kate', 'female');
+    const humanOleg = new Human('Oleg', 'male');
+
+    console.log(humanSasha.toString());
+    console.log(humanNastya.toString());
+    console.log(humanKate.toString());
+    console.log(humanOleg.toString());
+
+    const flatSN = new Flat();
+    const flatKO = new Flat();
+
+    flatSN.addHuman(humanSasha);
+    flatSN.addHuman(humanNastya);
+
+    flatKO.addHuman(humanKate);
+    flatKO.addHuman(humanOleg);
+
+    console.log(flatSN.toString());
+    console.log(flatKO.toString());
+
+    const house = new House(3);
+
+    house.addFlat(flatSN);
+    house.addFlat(flatKO);
+
+    console.log(house.toString())
+</script>
+
+</body>
+</html>
