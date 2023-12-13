@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HW 10</title>
+</head>
+<body>
+<h2>Open console!</h2>
+<script>
+    class Hamburger {
+        static SIZE_SMALL = {price: 50, energy: 20, title: 'Маленький'}
+        static SIZE_BIG = {price: 100, energy: 40, title: 'Большой'}
+        static STUFFING_CHEESE = {price: 10, energy: 20, title: 'сырная'}
+        static STUFFING_SALAD = {price: 20, energy: 5, title: 'салат'}
+        static STUFFING_POTATO = {price: 15, energy: 10, title: 'картофель'}
+        static TOPPING_SAUCE = {price: 15, energy: 0, title: 'приправа'}
+        static TOPPING_MAYO = {price: 20, energy: 5, title: 'майонез'}
+
+        constructor(size, stuffing) {
+            this.size = size;
+            this.stuffing = stuffing;
+            this.toppings = []
+        }
+
+        #sumIngredients(){
+            const ingredients = [this.size, this.stuffing, ...this.toppings];
+
+            return ingredients.reduce((acc, ingredient) => {
+                acc.price += ingredient.price;
+                acc.energy += ingredient.energy;
+
+                return acc;
+            }, {price: 0, energy: 0});
+        }
+
+        get energy() {
+            return this.#sumIngredients().energy;
+        }
+
+        get price() {
+            return this.#sumIngredients().price;
+        }
+
+        toString(){
+            let toppings = 'Без добавок';
+
+            if (this.toppings.length){
+                toppings = `Добавки: ${this.toppings.map(topping => topping.title).join(', ')}`;
+            }
+
+            return `${this.size.title} бургер, начинка ${this.stuffing.title}. ${toppings}. Калорийность: ${this.energy} ККал, цена ${this.price} Грн`;
+        }
+
+        addTopping(topping){
+            this.toppings.push(topping);
+        }
+    }
+
+    const hamburger = new Hamburger(Hamburger.SIZE_SMALL, Hamburger.STUFFING_CHEESE);
+    console.log(hamburger.toString());
+
+    hamburger.addTopping(Hamburger.TOPPING_MAYO);
+
+    console.log(hamburger.toString());
+    console.log("Calories:", hamburger.energy);
+    console.log("Price:", hamburger.price);
+
+    hamburger.addTopping(Hamburger.TOPPING_SAUCE);
+
+    console.log(hamburger.toString());
+    console.log("Price with sauce:", hamburger.price);
+    console.log("Calories with sauce:", hamburger.energy);
+</script>
+</body>
+</html>
