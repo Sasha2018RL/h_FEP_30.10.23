@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Homework 12</title>
+    <style>
+        .wrapper {
+            display: flex;
+            flex-direction: column;
+        }
+        .slider-wrapper {
+            display: flex;
+        }
+        .btn-wrapper {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin: 15px;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<h2>Slider</h2>
+<div class="wrapper">
+    <div class="current">
+        Current image: <span id="current">1</span>
+    </div>
+    <div class="slider-wrapper">
+        <div class="btn-wrapper">
+            <button id="prev" onclick="slide(-1)">Prev</button>
+        </div>
+        <div id="images">
+            <img src="https://placekitten.com/300/400">
+            <img src="https://placekitten.com/300/401" class="hidden">
+            <img src="https://placekitten.com/300/402" class="hidden">
+            <img src="https://placekitten.com/300/403" class="hidden">
+            <img src="https://placekitten.com/300/404" class="hidden">
+        </div>
+
+        <div class="btn-wrapper">
+            <button id="next" onclick="slide(1)">Next</button>
+        </div>
+    </div>
+
+</div>
+<script>
+    const current_element = document.getElementById('current');
+    const images_element = document.getElementById('images');
+
+    const images = Array.from(images_element.children);
+    let current = 0;
+
+    function slide(direction){
+        images[current].classList.add('hidden');
+
+        current += direction;
+
+        if (current >= images.length){
+            current = 0;
+        }
+
+        if (current < 0){
+            current = images.length - 1;
+        }
+
+        images[current].classList.remove('hidden');
+
+        current_element.innerText = (current + 1).toString();
+    }
+</script>
+</body>
+</html>
