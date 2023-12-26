@@ -30,14 +30,14 @@
     </div>
     <div class="slider-wrapper">
         <div class="btn-wrapper">
-            <button id="prev" onclick="slide(-1)">Prev</button>
+            <button id="prev" onclick="slide(-1)" disabled>Prev</button>
         </div>
         <div id="images">
             <img src="https://placekitten.com/300/400">
-            <img src="https://placekitten.com/300/401" class="hidden">
             <img src="https://placekitten.com/300/402" class="hidden">
             <img src="https://placekitten.com/300/403" class="hidden">
             <img src="https://placekitten.com/300/404" class="hidden">
+            <img src="https://placekitten.com/300/405" class="hidden">
         </div>
 
         <div class="btn-wrapper">
@@ -49,6 +49,8 @@
 <script>
     const current_element = document.getElementById('current');
     const images_element = document.getElementById('images');
+    const prev_btn = document.getElementById('prev');
+    const next_btn = document.getElementById('next');
 
     const images = Array.from(images_element.children);
     let current = 0;
@@ -58,12 +60,18 @@
 
         current += direction;
 
-        if (current >= images.length){
+        if (current <= 0){
             current = 0;
+            prev_btn.setAttribute('disabled', '1');
+        }else{
+            prev_btn.removeAttribute('disabled')
         }
 
-        if (current < 0){
+        if (current >= images.length - 1){
             current = images.length - 1;
+            next_btn.setAttribute('disabled', 1);
+        }else {
+            next_btn.removeAttribute('disabled')
         }
 
         images[current].classList.remove('hidden');
