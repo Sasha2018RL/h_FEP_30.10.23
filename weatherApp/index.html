@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Weather App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        html, body {
+            background-color: #f7f5f5;
+        }
+        .main {
+            width: 100vw;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .city {
+            font-size: 28px;
+        }
+
+        .weather-line {
+            line-height: 50px;
+        }
+
+        .container {
+            display: inline-block;
+        }
+
+        .icon {
+            font-size: 18px;
+        }
+        .pressure {
+            color: coral;
+        }
+
+        .pressure-badge {
+            background-color: coral;
+        }
+
+        .humidity {
+            color: blue;
+        }
+
+        .humidity-badge {
+            background-color: blue;
+        }
+
+        .wind {
+            color: indianred;
+        }
+
+        .wind-badge {
+            background-color: indianred;
+        }
+
+        .description {
+            color: mediumseagreen;
+        }
+
+        .description-badge {
+            background-color: mediumseagreen;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="main">
+    <div class="wrapper">
+
+        <h2>Weather app</h2>
+
+        <div class="row g-5 align-items-center">
+            <div class="col-auto">
+                <label for="city" class="col-form-label">Город</label>
+            </div>
+            <div class="col-auto">
+                <input type="text" id="city" class="form-control" aria-describedby="Город"
+                       oninput="cityInputHandler(this.value)">
+            </div>
+        </div>
+
+        <div class="alert alert-danger px-5 mt-3" role="alert" hidden id="city-not-found">
+            Город не найден!
+        </div>
+
+        <div class="container text-center g-5 mt-5 p-2 bg-info bg-opacity-10 border border-info rounded" id="weather-info" hidden>
+            <div class="row">
+                <div class="col">
+                    <span class="city weather-line" id="d-city"></span>
+                </div>
+                <div class="col"><img src="http://openweathermap.org/img/w/10d.png" id="d-icon" alt=""></div>
+                <div class="col">
+                    <span class="badge bg-primary" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Температура воздуха"><span id="d-temp-real"></span> ℃</span><br>
+
+                    <span class="badge bg-success" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Ощущается как"><span id="d-temp-feel"></span> ℃</span>
+                </div>
+            </div>
+            <div class="row pressure">
+                <div class="col"><i class="bi bi-hurricane icon"></i></div>
+                <div class="col">Давление</div>
+                <div class="col"><span class="badge pressure-badge" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Атмсферное давление"><span id="d-pressure"></span> ㍱</span></div>
+            </div>
+            <div class="row humidity">
+                <div class="col"><i class="bi bi-moisture icon"></i></div>
+                <div class="col">Влажность</div>
+                <div class="col"><span class="badge humidity-badge" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Влажность"><span id="d-humidity"></span>%</span></div>
+            </div>
+
+            <div class="row wind">
+                <div class="col"><i class="bi bi-wind icon"></i></div>
+                <div class="col">Ветер</div>
+                <div class="col"><span class="badge wind-badge" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Скорость и направление ветра"><span id="d-wind-speed"></span>㎧ <span id="d-wind-angle"></span>°</span></div>
+            </div>
+
+            <div class="row description">
+                <div class="col"><i class="bi bi-cloud-sun-fill icon"></i></div>
+                <div class="col">Погода</div>
+                <div class="col"><span class="badge description-badge" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Описание погоды" id="d-description"></span></div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="
+https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js
+"></script>
+<script src="main.js"></script>
+</body>
+</html>
