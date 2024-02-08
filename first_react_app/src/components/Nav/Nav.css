@@ -1,0 +1,11 @@
+.Nav {
+    padding: 20px;
+    text-align: center;
+    background-color: blue;
+}
+.Nav > * {
+    margin: 0 15px;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 10px;
+}
